@@ -8,6 +8,7 @@
 
 // import required modules
 import express from "express";
+import { addParticipant, addRequest, addVolunteer, getCity, getNeed, getParticipant, getRequest, getVolunteer } from "./controller.js"
 
 // define
 const page = express.Router();
@@ -16,7 +17,7 @@ const page = express.Router();
 page.get("/api/city", async (req, res) => {
 
     // get all
-    let results = []
+    let results = await getCity();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -26,7 +27,7 @@ page.get("/api/city", async (req, res) => {
 // Get api/need
 page.get("/api/need", async (req, res) => {
     // get all
-    let results = []
+    let results = await getNeed();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -36,7 +37,7 @@ page.get("/api/need", async (req, res) => {
 // Get api/request
 page.get("/api/request", async (req, res) => {
     // get all
-    let results = []
+    let results = await getRequest();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -46,7 +47,7 @@ page.get("/api/request", async (req, res) => {
 // Get api/volunteer
 page.get("/api/volunteer", async (req, res) => {
     // get all
-    let results = []
+    let results = await getVolunteer();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -56,7 +57,7 @@ page.get("/api/volunteer", async (req, res) => {
 // Get api/participant
 page.get("/api/participant", async (req, res) => {
     // get all
-    let results = []
+    let results = await getParticipant();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -66,7 +67,7 @@ page.get("/api/participant", async (req, res) => {
 // Get api
 page.get("/api", async (req, res) => {
     // get all
-    let results = []
+    let results = await getRequest();
 
     // reponse result
     if (!results) res.send("Not found").status(404);
@@ -81,7 +82,7 @@ page.post("/api/request", async (req, res) => {
     if (!document) res.send("Bad request").status(400)
 
     // process
-    let result = {}
+    let result = await addRequest(document);
 
     // after logic
     if (!result) res.send("Not found").status(404);
@@ -96,7 +97,7 @@ page.post("/api/volunteer", async (req, res) => {
     if (!document) res.send("Bad request").status(400)
 
     // process
-    let result = {}
+    let result = await addVolunteer(document);
 
     // after logic
     if (!result) res.send("Not found").status(404);
@@ -111,7 +112,7 @@ page.post("/api/participant", async (req, res) => {
     if (!document) res.send("Bad request").status(400)
 
     // process
-    let result = {}
+    let result = await addParticipant(document);
 
     // after logic
     if (!result) res.send("Not found").status(404);
