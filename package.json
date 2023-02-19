@@ -2,10 +2,10 @@
   "name": "nodejs-mongodb",
   "version": "0.0.1",
   "description": "Creating Node Js api using MongoDB",
-  "main": "index.js",
+  "main": "src",
   "type": "module",
   "scripts": {
-    "start": "node index"
+    "start": "node src"
   },
   "repository": {
     "type": "git",
