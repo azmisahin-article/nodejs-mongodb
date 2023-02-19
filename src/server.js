@@ -9,6 +9,7 @@
 // import required modules
 import express from "express";
 import cors from "cors";
+import pages from "./pages.js"
 
 // define
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,9 @@ export default {
      * Start web server
      */
     start: () => {
+        // define pages
+        app.use(pages)
+
         // start the Express server
         app.listen(PORT, () => {
             console.log(`Server is running on port: ${PORT}`);
