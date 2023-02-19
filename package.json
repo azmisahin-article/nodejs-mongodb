@@ -26,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/azmisahin-article/nodejs-mongodb/issues"
   },
-  "homepage": "https://github.com/azmisahin-article/nodejs-mongodb#readme"
+  "homepage": "https://github.com/azmisahin-article/nodejs-mongodb#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^5.0.1"
+  }
 }
