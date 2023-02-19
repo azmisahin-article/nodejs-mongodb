@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-mongodb",
+  "version": "0.0.1",
+  "description": "Creating Node Js api using MongoDB",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azmisahin-article/nodejs-mongodb.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "express",
+    "dotenv"
+  ],
+  "author": {
+    "name": "Azmi ŞAHİN",
+    "email": "azmisahin@outlook.com",
+    "url": "https://medium.com/@azmisahin/nodejs-mongodb-1cbf2cd8071c"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/azmisahin-article/nodejs-mongodb/issues"
+  },
+  "homepage": "https://github.com/azmisahin-article/nodejs-mongodb#readme"
+}
