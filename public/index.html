@@ -26,30 +26,48 @@
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
             <div class="container d-flex flex-wrap">
-                <form class="row gy-2 gx-3" role="search">
+                <form @submit.prevent="requestCreate" class="row gy-2 gx-3" role="search">
+
                     <div class="">
                         <label class="visually-hidden" for="geolocation">geolocation</label>
-                        <input type="hidden" class="form-control" id="geolocation" v-model="requestModel.geolocation"
-                            required placeholder="geolocation">
+                        <input :disabled="process" type="hidden" class="form-control" id="geolocation"
+                            v-model="requestModel.geolocation" required placeholder="geolocation">
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="cityName">city</label>
-                        <select class="form-select" id="cityName" v-model="requestModel.cityName" required>
+                        <select :disabled="process" class="form-select" id="cityName" v-model="requestModel.cityName"
+                            required>
                             <option v-for="city in cities" :key="city._id" v-html="city.cityName"></option>
                         </select>
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
-                        <select class="form-select" id="typeOfNeed" v-model="requestModel.typeOfNeed" required>
+                        <select :disabled="process" class="form-select" id="typeOfNeed"
+                            v-model="requestModel.typeOfNeed" required>
                             <option v-for="need in needs" :key="need._id" v-html="need.kind"></option>
                         </select>
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-success">Help Request</button>
+                        <button :disabled="process" type="submit" class="btn btn-success">Help Request</button>
                     </div>
+
                 </form>
 
+            </div>
+        </div>
+        <div v-show="process" class="toast-container p-3 bottom-0 end-0" id="toastPlacement"
+            data-original-class="toast-container p-3">
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
+                    <strong class="me-auto">New Request</strong>
+                    <small class="text-muted">5 sec ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    We forward your request to our volunteers.
+                </div>
             </div>
         </div>
     </header>
@@ -98,7 +116,7 @@
     </footer>
 
     <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
-        <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast fade" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
                 <strong class="me-auto">New volunteer</strong>

@@ -29,7 +29,13 @@ createApp({
     //
     methods: {
         // create a new request
-        async requestCreate() { }
+        async requestCreate() {
+            this.process = true
+            // process protection 
+            setTimeout(() => {
+                this.process = false
+            }, 5000);
+        }
     },
     // 
     created() {
