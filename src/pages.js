@@ -8,7 +8,7 @@
 
 // import required modules
 import express from "express";
-import { addParticipant, addRequest, addVolunteer, getCity, getNeed, getParticipant, getRequest, getVolunteer } from "./controller.js"
+import { addParticipant, addRequest, addVolunteer, getCity, getNeed, getParticipant, getRequest, getRVP, getVolunteer } from "./controller.js"
 
 // define
 const page = express.Router();
@@ -64,16 +64,6 @@ page.get("/api/participant", async (req, res) => {
     else res.send(results).status(200);
 });
 
-// Get api
-page.get("/api", async (req, res) => {
-    // get all
-    let results = await getRequest();
-
-    // reponse result
-    if (!results) res.send("Not found").status(404);
-    else res.send(results).status(200);
-});
-
 // Post api/request
 page.post("/api/request", async (req, res) => {
 
@@ -117,6 +107,17 @@ page.post("/api/participant", async (req, res) => {
     // after logic
     if (!result) res.send("Not found").status(404);
     else res.send(result).status(204);
+});
+
+// Get api
+// Overview of requests and volunteer participation [RVP]
+page.get("/api", async (req, res) => {
+    // get all
+    let results = await getRVP();
+
+    // reponse result
+    if (!results) res.send("Not found").status(404);
+    else res.send(results).status(200);
 });
 
 /**

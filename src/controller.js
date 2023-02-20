@@ -190,3 +190,24 @@ export async function addParticipant(document) {
         return document;
     } else return null;
 }
+
+/**
+ * Overview of requests and volunteer participation
+ * @returns [rvp]
+ */
+export async function getRVP() {
+    // get collection
+    let collection = await getCollection("request");
+
+    // find them
+    let results = await collection.find({})
+        // last record
+        .sort({ $natural: -1 })
+        //
+        .limit(50)
+        //
+        .toArray();
+
+    // response
+    return results;
+}
