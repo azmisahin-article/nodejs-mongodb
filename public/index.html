@@ -13,7 +13,6 @@
 
 <body>
 
-
     <header id="header-app">
         <div class="px-3 py-2 text-bg-dark">
             <div class="container">
@@ -54,8 +53,7 @@
         </div>
     </header>
 
-
-    <main>
+    <main id="main-app">
         <div class="container">
             <div class="table-responsive">
                 <table class="table">
@@ -69,37 +67,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Adana</td>
+                        <tr v-for="rvp in rvps">
+                            <td>{{rvp.cityName}}</td>
                             <td>
                                 <span class="badge bg-secondary">1</span>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
                                     <img src="help.png" width="32" alt="volunteer">
                                 </a>
-
                             </td>
-                            <td>Barınma</td>
-                            <td>2023-02-19 22:23</td>
-                            <td>36.8793,30.6561</td>
-                        </tr>
-                        <tr>
-                            <td>Gaziantep</td>
-                            <td>
-                                <span class="badge bg-secondary">0</span>
-                                <a href="#" title="be volunteer">
-                                    <img src="help.png" width="32" alt="volunteer">
-                                </a>
-                            </td>
-                            <td>Barınma</td>
-                            <td>2023-02-19 22:24</td>
-                            <td>36.8793,30.6561</td>
+                            <td>{{rvp.typeOfNeed}}</td>
+                            <td>{{rvp.calendar}}</td>
+                            <td>{{rvp.geolocation}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
-
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center border-top">
         <div class="container">
@@ -111,7 +95,6 @@
             </div>
         </div>
     </footer>
-
 
     <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
         <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -126,7 +109,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal" tabindex="-1" id="modal">
         <div class="modal-dialog dialog modal-lg">
@@ -168,7 +150,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 

@@ -39,3 +39,27 @@ createApp({
         })
     }
 }).mount('#header-app')
+
+// main app
+createApp({
+    //
+    data() {
+        return {
+            // global process flag
+            process: false,
+
+            // default init rvps
+            rvps: [],
+        }
+    },
+    //
+    methods: {
+
+    },
+    // 
+    created() {
+        fetchRVP().then(([rvps]) => {
+            this.rvps = rvps
+        })
+    }
+}).mount('#main-app')

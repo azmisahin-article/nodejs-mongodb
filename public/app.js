@@ -55,3 +55,22 @@ async function fetchPararlel() {
     }
     return [cities, needs];
 }
+
+/**
+ * Overview of requests and volunteer participation [RVP]
+ * @returns 
+ */
+async function fetchRVP() {
+
+    let rvps;
+    try {
+        const [rvpResponse] = await Promise.all([
+            take('/api'),
+        ]);
+
+        rvps = await rvpResponse.json();
+    } catch (error) {
+        log("error", error)
+    }
+    return [rvps];
+}
