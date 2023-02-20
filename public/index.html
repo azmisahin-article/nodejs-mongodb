@@ -33,13 +33,15 @@
                         <input type="hidden" class="form-control" id="geolocation" placeholder="geolocation">
                     </div>
                     <div class="col-auto">
-                        <label class="visually-hidden" for="cityName" required>city</label>
-                        <select class="form-select" id="cityName">
+                        <label class="visually-hidden" for="cityName">city</label>
+                        <select class="form-select" id="cityName" required>
+                            <option v-for="city in cities" :key="city._id">{{city.cityName}}</option>
                         </select>
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
                         <select class="form-select" id="typeOfNeed" required>
+                            <option v-for="need in needs" :key="need._id">{{need.kind}}</option>
                         </select>
                     </div>
 
