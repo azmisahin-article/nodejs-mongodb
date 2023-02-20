@@ -62,4 +62,5 @@ createApp({
             this.rvps = rvps
         })
     }
+
 }).mount('#main-app')

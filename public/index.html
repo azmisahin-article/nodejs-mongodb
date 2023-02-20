@@ -34,13 +34,13 @@
                     <div class="col-auto">
                         <label class="visually-hidden" for="cityName">city</label>
                         <select class="form-select" id="cityName" required>
-                            <option v-for="city in cities" :key="city._id">{{city.cityName}}</option>
+                            <option v-for="city in cities" :key="city._id" v-html="city.cityName"></option>
                         </select>
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
                         <select class="form-select" id="typeOfNeed" required>
-                            <option v-for="need in needs" :key="need._id">{{need.kind}}</option>
+                            <option v-for="need in needs" :key="need._id" v-html="need.kind"></option>
                         </select>
                     </div>
 
@@ -68,16 +68,16 @@
                     </thead>
                     <tbody>
                         <tr v-for="rvp in rvps">
-                            <td>{{rvp.cityName}}</td>
+                            <td v-html="rvp.cityName"></td>
                             <td>
-                                <span class="badge bg-secondary">1</span>
+                                <span class="badge bg-secondary" v-html="rvp.volunteers"></span>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
                                     <img src="help.png" width="32" alt="volunteer">
                                 </a>
                             </td>
-                            <td>{{rvp.typeOfNeed}}</td>
-                            <td>{{rvp.calendar}}</td>
-                            <td>{{rvp.geolocation}}</td>
+                            <td v-html="rvp.typeOfNeed"></td>
+                            <td v-html="rvp.calendar"></td>
+                            <td v-html="rvp.geolocation"></td>
                         </tr>
                     </tbody>
                 </table>
