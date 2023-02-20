@@ -7,10 +7,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help</title>
     <link rel="icon" href="/help.png" sizes="64x64" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="ap"></div>
+    <div id="app">
+        <!-- header -->
+        <header>
+            <div class="px-3 py-2 text-bg-dark">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <a href="/"
+                            class="placeholder-glow d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <img class="placeholder bg-dark" src="help.png" width="64" alt="help"> <span>Help</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3 py-2 border-bottom mb-3">
+                <div class="container d-flex flex-wrap">
+                    <form class="row gy-2 gx-3" role="search">
+                        <div class="">
+                            <label class="visually-hidden" for="geolocation">geolocation</label>
+                            <input type="hidden" class="form-control" id="geolocation" placeholder="geolocation">
+                        </div>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="cityName" required>city</label>
+                            <select class="form-select" id="cityName">
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
+                            <select class="form-select" id="typeOfNeed" required>
+                            </select>
+                        </div>
+
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-success">Help Request</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </header>
+
+        <!-- main -->
+        <main>
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">city</th>
+                                <th scope="col">volunteer</th>
+                                <th scope="col">need</th>
+                                <th scope="col">calendar</th>
+                                <th scope="col">geolocation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Adana</td>
+                                <td>
+                                    <span class="badge bg-secondary">1</span>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
+                                        <img src="help.png" width="32" alt="volunteer">
+                                    </a>
+
+                                </td>
+                                <td>Barınma</td>
+                                <td>2023-02-19 22:23</td>
+                                <td>36.8793,30.6561</td>
+                            </tr>
+                            <tr>
+                                <td>Gaziantep</td>
+                                <td>
+                                    <span class="badge bg-secondary">0</span>
+                                    <a href="#" title="be volunteer">
+                                        <img src="help.png" width="32" alt="volunteer">
+                                    </a>
+                                </td>
+                                <td>Barınma</td>
+                                <td>2023-02-19 22:24</td>
+                                <td>36.8793,30.6561</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <footer class="d-flex flex-wrap justify-content-between align-items-center border-top">
+            <div class="container">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="placeholder-glow mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <img class="placeholder bg-light" src="help.png" width="32" alt="help">
+                    </a>
+                    <span class="mb-3 mb-md-0 text-muted">© 2023 Help</span>
+                </div>
+            </div>
+        </footer>
+
+        <!-- announce -->
+        <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
+            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
+                    <strong class="me-auto">New volunteer</strong>
+                    <small class="text-muted">11 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    We have a new volunteer.
+                </div>
+            </div>
+        </div>
+
+        <!-- dialog -->
+        <div class="modal" tabindex="-1" id="modal">
+            <div class="modal-dialog dialog modal-lg">
+                <div class="modal-content">
+                    <form id="volunteerForm" class="was-validated needs-validation">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Become a volunteer.</h5><button type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p>Dear volunteer <b></b></p>
+                                        <p>Enter your details to fulfill the request and volunteer. <b></b></p>
+                                        <div class="form-group">
+                                            <label for="emailAddress" class="form-label">Email address</label>
+                                            <input value="" type="email" class="form-control" id="emailAddress"
+                                                placeholder="name@example.com" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please provide a valid email.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item bg-warning">Collaborators
+                                                <span class="badge badge-primary badge-pill">0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success">
+                                <img src="help.png" width="20"> Send</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- client site application and user interface -->
     <script src="app.js"></script>
     <script src="ui.js"></script>
