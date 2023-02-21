@@ -52,6 +52,8 @@ createApp({
             processR: false,
             // request process flag
             processV: false,
+            // geopositon process flag
+            processL: false,
 
             // default init cities
             cities: [],
@@ -77,12 +79,24 @@ createApp({
                 speed: position.coords.speed,
                 timestamp: position.timestamp
             }
+            this.processL = true
+            // process protection 
+            setTimeout(() => {
+                // done work
+                this.processL = false
+            }, 5000);
         },
         //
         async getGeolocation() {
 
             function error() {
-                alert('Sorry, no position available.');
+                this.processl = true
+                // process protection 
+                setTimeout(() => {
+                    // done work
+                    this.processl = false
+                }, 5000);
+                this.geolocation.error = "Sorry, no position available"
             }
 
             const options = {

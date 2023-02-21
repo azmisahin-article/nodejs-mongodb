@@ -110,6 +110,18 @@
                         We have a new volunteer.
                     </div>
                 </div>
+
+                <div v-show="processL" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
+                        <strong class="me-auto">Location update {{geolocation.error}}</strong>
+                        <small class="text-muted">{{speed}}</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        {{geolocation.latitude}} - {{geolocation.longitude}} / {{geolocation.accuracy}}
+                    </div>
+                </div>
             </div>
 
             <div class="modal" tabindex="-1" id="modal">
