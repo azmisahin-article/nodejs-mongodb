@@ -7,174 +7,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help</title>
     <link rel="icon" href="/help.png" sizes="64x64" type="image/png">
+
+    <!-- css framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- tools and helpers -->
+    <script src="helpers.js"></script>
+
 </head>
 
 <body>
-
-    <header id="header-app">
-        <div class="px-3 py-2 text-bg-dark">
+    <div id="app">
+        <!-- application -->
+        <div>
+            <!-- ui -->
             <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/"
-                        class="placeholder-glow d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                        <img class="placeholder bg-dark" src="help.png" width="64" alt="help"> <span>Help</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="px-3 py-2 border-bottom mb-3">
-            <div class="container d-flex flex-wrap">
-                <form @submit.prevent="requestCreate" class="row gy-2 gx-3" role="search">
+                <form @submit.prevent="requestCreate" class="was-validated row gy-2 gx-3">
 
                     <div class="">
                         <label class="visually-hidden" for="geolocation">geolocation</label>
-                        <input :disabled="process" type="hidden" class="form-control" id="geolocation"
-                            v-model="requestModel.geolocation" required placeholder="geolocation">
+                        <input type="hidden" class="form-control" placeholder="geolocation" id="geolocation" required
+                            :disabled="h.process" v-model="h.m.request.geolocation">
                     </div>
+
                     <div class="col-auto">
                         <label class="visually-hidden" for="cityName">city</label>
-                        <select :disabled="process" class="form-select" id="cityName" v-model="requestModel.cityName"
-                            required>
-                            <option v-for="city in cities" :key="city._id" v-html="city.cityName"></option>
+                        <select class="form-select" placeholder="city name" id="cityName" required :disabled="h.process"
+                            v-model="h.m.request.cityName">
+                            <option v-for="city in h.cities" :key="city._id" v-html="city.cityName"></option>
                         </select>
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
-                        <select :disabled="process" class="form-select" id="typeOfNeed"
-                            v-model="requestModel.typeOfNeed" required>
-                            <option v-for="need in needs" :key="need._id" v-html="need.kind"></option>
+                        <select class="form-select" placeholder="type of need" id="typeOfNeed" required
+                            :disabled="h.process" v-model="h.m.request.typeOfNeed">
+                            <option v-for="need in h.needs" :key="need._id" v-html="need.kind"></option>
                         </select>
                     </div>
 
                     <div class="col-auto">
-                        <button :disabled="process" type="submit" class="btn btn-success">Help Request</button>
+                        <button class="btn btn-success" type="submit" :disabled="h.process">Help Request</button>
                     </div>
 
                 </form>
 
+                <main>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">city</th>
+                                <th scope="col">volunteer</th>
+                                <th scope="col">need</th>
+                                <th scope="col">calendar</th>
+                                <th scope="col">geolocation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="rvp in m.rvps">
+                                <td v-html="rvp.cityName"></td>
+                                <td>
+                                    <span class="badge bg-secondary" v-html="rvp.volunteers"></span>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
+                                        <img src="help.png" width="32" alt="volunteer">
+                                    </a>
+                                </td>
+                                <td v-html="rvp.typeOfNeed"></td>
+                                <td v-html="rvp.calendar"></td>
+                                <td v-html="rvp.geolocation.accuracy"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </main>
             </div>
-        </div>
-        <div v-show="process" class="toast-container p-3 bottom-0 end-0" id="toastPlacement"
-            data-original-class="toast-container p-3">
-            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
-                    <strong class="me-auto">New Request</strong>
-                    <small class="text-muted">5 sec ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    We forward your request to our volunteers.
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <main id="main-app">
-        <div class="container">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">city</th>
-                            <th scope="col">volunteer</th>
-                            <th scope="col">need</th>
-                            <th scope="col">calendar</th>
-                            <th scope="col">geolocation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="rvp in rvps">
-                            <td v-html="rvp.cityName"></td>
-                            <td>
-                                <span class="badge bg-secondary" v-html="rvp.volunteers"></span>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
-                                    <img src="help.png" width="32" alt="volunteer">
-                                </a>
-                            </td>
-                            <td v-html="rvp.typeOfNeed"></td>
-                            <td v-html="rvp.calendar"></td>
-                            <td v-html="rvp.geolocation"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+            <!-- component -->
 
-    <footer class="d-flex flex-wrap justify-content-between align-items-center border-top">
-        <div class="container">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="placeholder-glow mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <img class="placeholder bg-light" src="help.png" width="32" alt="help">
-                </a>
-                <span class="mb-3 mb-md-0 text-muted">© 2023 Help</span>
-            </div>
-        </div>
-    </footer>
+            <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement"
+                data-original-class="toast-container p-3">
 
-    <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement" data-original-class="toast-container p-3">
-        <div class="toast fade" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
-                <strong class="me-auto">New volunteer</strong>
-                <small class="text-muted">11 mins ago</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                We have a new volunteer.
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1" id="modal">
-        <div class="modal-dialog dialog modal-lg">
-            <div class="modal-content">
-                <form id="volunteerForm" class="was-validated needs-validation">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Become a volunteer.</h5><button type="button" class="btn-close"
-                            data-bs-dismiss="modal" aria-label="Close"></button>
+                <div v-show="h.process" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
+                        <strong class="me-auto">New Request</strong>
+                        <small class="text-muted">5 sec ago</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p>Dear volunteer <b></b></p>
-                                    <p>Enter your details to fulfill the request and volunteer. <b></b></p>
-                                    <div class="form-group">
-                                        <label for="emailAddress" class="form-label">Email address</label>
-                                        <input value="" type="email" class="form-control" id="emailAddress"
-                                            placeholder="name@example.com" required>
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please provide a valid email.</div>
+                    <div class="toast-body">
+                        We forward your request to our volunteers.
+                    </div>
+                </div>
+
+                <div v-show="m.process" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
+                        <strong class="me-auto">New volunteer</strong>
+                        <small class="text-muted">11 mins ago</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        We have a new volunteer.
+                    </div>
+                </div>
+            </div>
+
+            <div v-show="h.process" class="modal" tabindex="-1" id="modal">
+                <div class="modal-dialog dialog modal-lg">
+                    <div class="modal-content">
+
+                        <form @submit.prevent="becomeVolunteer" class="was-validated">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Become a volunteer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <p>Dear volunteer <b>.</b></p>
+                                            <p>Enter your details to fulfill the request and volunteer<b>.</b></p>
+                                            <div class="form-group">
+                                                <label for="emailAddress" class="form-label">Email address</label>
+                                                <input :disabled="m.process" value="" type="email" class="form-control"
+                                                    id="emailAddress" placeholder="name@example.com" required />
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please provide a valid email.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <ul class="list-group">
+                                                <li class="list-group-item bg-warning">Collaborators
+                                                    <span class="badge badge-primary badge-pill">0</span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <ul class="list-group">
-                                        <li class="list-group-item bg-warning">Collaborators
-                                            <span class="badge badge-primary badge-pill">0</span>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-outline-success">
-                            <img src="help.png" width="20"> Send</button>
+                            <div class="modal-footer">
+                                <button :disabled="m.process" type="submit" class="btn btn-outline-success">
+                                    <img src="help.png" width="20" />
+                                    <span>Send</span>
+                                </button>
+                            </div>
+                        </form>
 
-                </form>
+                    </div>
+                </div>
             </div>
+
         </div>
+        <!-- / application -->
     </div>
+
+    <!-- Application -->
+    <script type="module" src="app.js"></script>
 
 </body>
 
 </html>
-
-<script src="app.js"></script>
-<script src="ui.js"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="app.vue.js"></script>
