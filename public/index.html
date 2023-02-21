@@ -28,26 +28,26 @@
                     <div class="">
                         <label class="visually-hidden" for="geolocation">geolocation</label>
                         <input type="hidden" class="form-control" placeholder="geolocation" id="geolocation" required
-                            :disabled="h.process" v-model="h.m.request.geolocation">
+                            :disabled="processR" v-model="request.geolocation">
                     </div>
 
                     <div class="col-auto">
                         <label class="visually-hidden" for="cityName">city</label>
-                        <select class="form-select" placeholder="city name" id="cityName" required :disabled="h.process"
-                            v-model="h.m.request.cityName">
-                            <option v-for="city in h.cities" :key="city._id" v-html="city.cityName"></option>
+                        <select class="form-select" placeholder="city name" id="cityName" required :disabled="processR"
+                            v-model="request.cityName">
+                            <option v-for="city in cities" :key="city._id" v-html="city.cityName"></option>
                         </select>
                     </div>
                     <div class="col-auto">
                         <label class="visually-hidden" for="typeOfNeed">typeOfNeed</label>
                         <select class="form-select" placeholder="type of need" id="typeOfNeed" required
-                            :disabled="h.process" v-model="h.m.request.typeOfNeed">
-                            <option v-for="need in h.needs" :key="need._id" v-html="need.kind"></option>
+                            :disabled="processR" v-model="request.typeOfNeed">
+                            <option v-for="need in needs" :key="need._id" v-html="need.kind"></option>
                         </select>
                     </div>
 
                     <div class="col-auto">
-                        <button class="btn btn-success" type="submit" :disabled="h.process">Help Request</button>
+                        <button class="btn btn-success" type="submit" :disabled="processR">Help Request</button>
                     </div>
 
                 </form>
@@ -64,11 +64,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="rvp in m.rvps">
+                            <tr v-for="rvp in rvps">
                                 <td v-html="rvp.cityName"></td>
                                 <td>
                                     <span class="badge bg-secondary" v-html="rvp.volunteers"></span>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal" title="be volunteer">
+                                    <a v-on:click="selectedRVP(rvp)" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#modal" title="be volunteer">
                                         <img src="help.png" width="32" alt="volunteer">
                                     </a>
                                 </td>
@@ -86,7 +87,7 @@
             <div class="toast-container p-3 bottom-0 end-0" id="toastPlacement"
                 data-original-class="toast-container p-3">
 
-                <div v-show="h.process" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div v-show="processR" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
                         <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
                         <strong class="me-auto">New Request</strong>
@@ -98,7 +99,7 @@
                     </div>
                 </div>
 
-                <div v-show="m.process" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div v-show="processV" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
                         <img src="help.png" class="bd-placeholder-img rounded me-2" width="20" />
                         <strong class="me-auto">New volunteer</strong>
@@ -111,7 +112,7 @@
                 </div>
             </div>
 
-            <div v-show="h.process" class="modal" tabindex="-1" id="modal">
+            <div class="modal" tabindex="-1" id="modal">
                 <div class="modal-dialog dialog modal-lg">
                     <div class="modal-content">
 
@@ -125,12 +126,14 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-8">
-                                            <p>Dear volunteer <b>.</b></p>
-                                            <p>Enter your details to fulfill the request and volunteer<b>.</b></p>
+                                            <p>Dear volunteer <b v-html="volunteer.collaborator"></b></p>
+                                            <p>Enter your details to fulfill the request and volunteer / <b
+                                                    v-html="request.typeOfNeed"></b></p>
                                             <div class="form-group">
                                                 <label for="emailAddress" class="form-label">Email address</label>
-                                                <input :disabled="m.process" value="" type="email" class="form-control"
-                                                    id="emailAddress" placeholder="name@example.com" required />
+                                                <input :disabled="processV" v-model="volunteer.collaborator"
+                                                    type="email" class="form-control" id="emailAddress"
+                                                    placeholder="name@example.com" required />
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please provide a valid email.</div>
                                             </div>
@@ -146,7 +149,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button :disabled="m.process" type="submit" class="btn btn-outline-success">
+                                <button :disabled="processV" type="submit" data-bs-dismiss="modal"
+                                    class="btn btn-outline-success">
                                     <img src="help.png" width="20" />
                                     <span>Send</span>
                                 </button>

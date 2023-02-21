@@ -19,60 +19,55 @@ createApp({
                 need: "/need",
                 rvp: "/",
                 request: "/request",
+                volunteer: "/volunteer",
             },
-            // header data
-            h: {
-                // models
-                m: {
-                    // create request form
-                    request: {
-                        cityName: null, typeOfNeed: null, geolocation: {
-                            latitude: null,
-                            longitude: null,
-                            accuracy: null,
-                            altitude: null,
-                            altitudeAccuracy: null,
-                            heading: null,
-                            speed: null,
-                            timestamp: null
-                        }
-                    },
-                },
-                // global process flag
-                process: false,
-
-                // default init cities
-                cities: [],
-
-                // default init needs
-                needs: []
+            // models
+            // geolocation
+            geolocation: {
+                latitude: null,
+                longitude: null,
+                accuracy: null,
+                altitude: null,
+                altitudeAccuracy: null,
+                heading: null,
+                speed: null,
+                timestamp: null
             },
-            // main data
-            m: {
-                // global process flag
-                process: false,
+            // create request form
+            request: {
+                cityName: null, typeOfNeed: null, geolocation: {
+                    latitude: null,
+                    longitude: null,
+                    accuracy: null,
+                    altitude: null,
+                    altitudeAccuracy: null,
+                    heading: null,
+                    speed: null,
+                    timestamp: null
+                }
+            },
+            // volunter form
+            volunteer: { collaborator: null, typeOfNeed: null },
+            // request process flag
+            processR: false,
+            // request process flag
+            processV: false,
 
-                // default init rvps
-                rvps: [],
-            }
+            // default init cities
+            cities: [],
+
+            // default init needs
+            needs: [],
+
+            // default init rvps
+            rvps: [],
         }
     },
     //
     methods: {
-        //
-        async processProtection(process, protectionDuuration) {
-            // before work
-            this[""] = true;
-
-            // process protection 
-            setTimeout(() => {
-                // done work
-                process = false;
-            }, protectionDuuration);
-        },
         async setPostion(position) {
 
-            this.h.m.request.geolocation = {
+            this.geolocation = {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 accuracy: position.coords.accuracy,
@@ -83,7 +78,8 @@ createApp({
                 timestamp: position.timestamp
             }
         },
-        async geolocation() {
+        //
+        async getGeolocation() {
 
             function error() {
                 alert('Sorry, no position available.');
@@ -95,49 +91,58 @@ createApp({
                 timeout: 27000
             };
 
-            const watchID = navigator.geolocation.watchPosition(this.setPostion, error, options);
+            this.watchID = navigator.geolocation.watchPosition(this.setPostion, error, options);
         },
         // 
         async init() {
 
             // header
-            this.h.cities = await get(this.a.city);
-            this.h.needs = await get(this.a.need);
+            this.cities = await get(this.a.city);
+            this.needs = await get(this.a.need);
 
             // main
-            this.m.rvps = await get(this.a.rvp);
+            this.rvps = await get(this.a.rvp);
 
             // 
-            this.geolocation()
+            this.getGeolocation()
         },
         // create a new request
         async requestCreate() {
 
             // before work
-            this.h.process = true
+            this.processR = true
             // process protection 
             setTimeout(() => {
                 // done work
-                this.h.process = false
+                this.processR = false
             }, 5000);
 
             // logic
-            this.h.request = await post(this.a.request, this.h.m.request)
+            this.request.geolocation = this.geolocation
+            this.request = await post(this.a.request, this.request)
             // update main data
-            this.m.rvps = await get(this.a.rvp);
+            this.rvps = await get(this.a.rvp);
+        },
+        async selectedRVP(rvp) {
+            this.request = rvp
+            this.volunteer.typeOfNeed = rvp.typeOfNeed
         },
         // become a volunteer
         async becomeVolunteer() {
 
             // before work
-            this.m.process = true
+            this.processV = true
             // process protection 
             setTimeout(() => {
                 // done work
-                this.m.process = false;
+                this.processV = false;
             }, 5000);
 
             // logic
+            this.volunteer.geolocation = this.geolocation
+            this.volunteer = await post(this.a.volunteer, this.volunteer)
+            // update main data
+            this.rvps = await get(this.a.rvp);
 
         }
     },
