@@ -35,6 +35,24 @@ async function take(resource, options = {}) {
     return response;
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+async function post(uri, data) {
+    let response = null
+    try {
+        response = await take(uri, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+    } catch (error) {
+        log("error post", error)
+    }
+
+    return response
+}
+
 /**
  * Get all ldata
  * */
