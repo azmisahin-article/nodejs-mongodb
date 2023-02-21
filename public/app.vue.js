@@ -30,7 +30,18 @@ createApp({
     methods: {
         // create a new request
         async requestCreate() {
+            // process flag
             this.process = true
+
+            // request create logic
+            const response = await post("/api/request", this.requestModel)
+
+            // response success
+            if (response.ok) {
+                // everything is ok
+                const result = await response.json()
+            }
+
             // process protection 
             setTimeout(() => {
                 this.process = false
