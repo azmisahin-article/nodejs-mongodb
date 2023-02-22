@@ -102,6 +102,22 @@ export async function getVolunteer() {
 }
 
 /**
+ * get all volunteer by id
+ * @param {ObjectId} id 
+ * @returns volunteer
+ */
+export async function getVolunteerById(id) {
+    // get collection
+    let collection = await getCollection("volunteer");
+
+    // find them
+    let results = await collection.findOne({ _id: new ObjectId(id) })
+
+    // response
+    return results;
+}
+
+/**
  * get all participant
  * @returns [participant]
  */

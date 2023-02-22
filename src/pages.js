@@ -8,7 +8,7 @@
 
 // import required modules
 import express from "express";
-import { addParticipant, addRequest, addVolunteer, getCity, getNeed, getParticipant, getRequest, getRVP, getVolunteer } from "./controller.js"
+import { addParticipant, addRequest, addVolunteer, getCity, getNeed, getParticipant, getRequest, getRVP, getVolunteer, getVolunteerById } from "./controller.js"
 
 // define
 const page = express.Router();
@@ -48,6 +48,20 @@ page.get("/api/request", async (req, res) => {
 page.get("/api/volunteer", async (req, res) => {
     // get all
     let results = await getVolunteer();
+
+    // reponse result
+    if (!results) res.send("Not found").status(404);
+    else res.send(results).status(200);
+});
+
+// Get api/volunteer by id
+page.get("/api/volunteer/:id", async (req, res) => {
+
+    // parameteres
+    let parameters = req.params
+
+    // get all
+    let results = await getVolunteerById(parameters.id);
 
     // reponse result
     if (!results) res.send("Not found").status(404);
