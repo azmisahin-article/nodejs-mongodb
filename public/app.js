@@ -59,6 +59,14 @@ createApp({
     },
     //
     methods: {
+
+        /**
+         * Count any array
+         * @param {Array} data 
+         */
+        count(data) {
+            return (data != null) ? data.length : 0
+        },
         async setPostion(position) {
 
             this.geolocation = {

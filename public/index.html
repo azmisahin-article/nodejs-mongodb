@@ -67,7 +67,8 @@
                             <tr v-for="rvp in rvps">
                                 <td v-html="rvp.cityName"></td>
                                 <td>
-                                    <span class="badge bg-secondary" v-html="rvp.volunteers"></span>
+                                    <span class="badge bg-secondary" title="total participants"
+                                        v-html="count(rvp.participants)"></span>
                                     <a v-on:click="selectedRVP(rvp)" href="#" data-bs-toggle="modal"
                                         data-bs-target="#modal" title="be volunteer">
                                         <img src="help.png" width="32" alt="volunteer">
