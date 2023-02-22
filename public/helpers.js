@@ -144,3 +144,9 @@ async function parallelWorker(source, target) {
     }
     return results;
 }
+
+// ui popoper init
+function popoverInit() {
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+}
