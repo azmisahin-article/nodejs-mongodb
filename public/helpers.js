@@ -96,12 +96,13 @@ async function get(endpoint) {
 }
 
 /**
- * send endpoint
+ * data generation with endpoint
  * @param {string} endpoint path
  * @param {json} data 
  * @returns {} | null
  */
-async function post(endpoint, data) {
+async function create(endpoint, data) {
+
     //
     let result;
 

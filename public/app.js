@@ -20,6 +20,7 @@ createApp({
                 rvp: "/",
                 request: "/request",
                 volunteer: "/volunteer",
+                participant: "/participant",
             },
             // models
             // geolocation
@@ -48,6 +49,8 @@ createApp({
             },
             // volunter form
             volunteer: { collaborator: null, typeOfNeed: null },
+            // participant
+            participant: { request_id: null, volunteer_id: null },
             // request process flag
             processR: false,
             // request process flag
@@ -90,7 +93,7 @@ createApp({
         async getGeolocation() {
 
             function error() {
-                this.processl = true
+                this.processL = true
                 // process protection 
                 setTimeout(() => {
                     // done work
@@ -133,7 +136,7 @@ createApp({
 
             // logic
             this.request.geolocation = this.geolocation
-            this.request = await post(this.a.request, this.request)
+            this.request = await create(this.a.request, this.request)
             // update main data
             this.rvps = await get(this.a.rvp);
         },
@@ -141,6 +144,15 @@ createApp({
             this.request = rvp
             this.volunteer.typeOfNeed = rvp.typeOfNeed
         },
+
+        // create a participant
+        async combineRequestAndVolunteer(participant) {
+
+            // logic
+            this.participant = await create(this.a.participant, participant)
+
+        },
+
         // become a volunteer
         async becomeVolunteer() {
 
@@ -154,7 +166,11 @@ createApp({
 
             // logic
             this.volunteer.geolocation = this.geolocation
-            this.volunteer = await post(this.a.volunteer, this.volunteer)
+            this.volunteer = await create(this.a.volunteer, this.volunteer)
+            // add logic
+            // whenever a volunteer responds to the request, they join.
+            this.combineRequestAndVolunteer({ request_id: this.request._id, volunteer_id: this.volunteer._id })
+
             // update main data
             this.rvps = await get(this.a.rvp);
 
