@@ -34,23 +34,12 @@ createApp({
                 speed: null,
                 timestamp: null
             },
-            // create request form
-            request: {
-                cityName: null, typeOfNeed: null, geolocation: {
-                    latitude: null,
-                    longitude: null,
-                    accuracy: null,
-                    altitude: null,
-                    altitudeAccuracy: null,
-                    heading: null,
-                    speed: null,
-                    timestamp: null
-                }
-            },
-            // volunter form
-            volunteer: { collaborator: null, typeOfNeed: null },
-            // participant
-            participant: { request_id: null, volunteer_id: null },
+            // request model
+            request: { _id: null, cityName: null, typeOfNeed: null, geolocation: this.geolocation },
+            // volunter model
+            volunteer: { _id: null, collaborator: null, typeOfNeed: null },
+            // participant model
+            participant: { _id: null, request_id: null, volunteer_id: null },
             // request process flag
             processR: false,
             // request process flag
