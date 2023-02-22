@@ -153,9 +153,17 @@
                                         </div>
                                         <div class="col-4">
                                             <ul class="list-group">
-                                                <li class="list-group-item bg-warning">Collaborators
-                                                    <span class="badge badge-primary badge-pill">0</span>
+                                                <li class="list-group-item bg-secondary text-white">Collaborators
+                                                    <span
+                                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                        v-html="count(request.participants)">
+
+                                                        <span class="visually-hidden">total Collaborators</span>
+                                                    </span>
+
                                                 </li>
+                                                <li class="list-group-item" v-for="participant in request.participants"
+                                                    v-html="participant.volunteer_id"></li>
                                             </ul>
                                         </div>
                                     </div>
