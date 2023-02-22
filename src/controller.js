@@ -8,6 +8,7 @@
 
 // import required modules
 import db from "./database.js";
+import { ObjectId } from "mongodb";
 
 /**
  * get document collection
@@ -177,6 +178,9 @@ export async function addParticipant(document) {
 
     // pre logic
     document.calendar = new Date();
+    // to combine we need to transform the object
+    document.request_id = new ObjectId(document.request_id)
+    document.volunteer_id = new ObjectId(document.volunteer_id)
 
     // get collection
     let collection = await getCollection("participant");
@@ -200,12 +204,19 @@ export async function getRVP() {
     let collection = await getCollection("request");
 
     // find them
-    let results = await collection.find({})
-        // last record
-        .sort({ $natural: -1 })
-        //
-        .limit(50)
-        //
+    let results = await collection
+        // We collect collection data
+        .aggregate([
+            {
+                $lookup: {
+                    from: 'participant',
+                    localField: '_id',
+                    foreignField: 'request_id',
+                    as: 'participants'
+                }
+            }
+        ])
+        // the array is exported
         .toArray();
 
     // response
